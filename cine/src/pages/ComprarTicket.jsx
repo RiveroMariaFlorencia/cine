@@ -1,13 +1,27 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router";
 import "./ComprarTicket.css";
 
 // Componente principal de la página de compra.
 // En React, un componente es una función que devuelve JSX.
 function ComprarTicket() {
 
-    // Estado que guarda en qué paso del proceso estamos.
-    // El valor inicial es 1.
-    const [pasoActual, setPasoActual] = useState(1);
+    // Lee los parámetros que llegan en la URL.
+    // Ejemplo:
+    // /comprar-ticket?pelicula=barbie&dia=hoy&horario=17:00
+    const [searchParams] = useSearchParams();
+
+    const pelicula = searchParams.get("pelicula");
+    const dia = searchParams.get("dia");
+    const horario = searchParams.get("horario");
+
+    // Si ya vienen película, día y horario,
+    // los pasos 1 y 2 ya están resueltos.
+    // Por eso comenzamos directamente en Entradas (paso 3).
+    const pasoInicial =
+        pelicula && dia && horario ? 3 : 1;
+
+    const [pasoActual, setPasoActual] = useState(pasoInicial);
 
     // Lista con los pasos del proceso de compra.
     // La usamos para generar el stepper sin repetir código.
@@ -61,28 +75,34 @@ function ComprarTicket() {
 
             <section className="contenedor-compra">
 
-                <p>
-                    <p>
-    Paso actual: {pasoActual}
-</p>
+    {/* Muestra los datos solo si llegaron por la URL */}
+    {pelicula && dia && horario && (
+        <div>
+            <p>Película: {pelicula}</p>
+            <p>Día: {dia}</p>
+            <p>Horario: {horario}</p>
+        </div>
+    )}
 
-<button
-    onClick={() => setPasoActual(pasoActual + 1)}
-    disabled={pasoActual === 5}
->
-    Siguiente
-</button>
+    <p>
+        Paso actual: {pasoActual}
+    </p>
 
-<button
-    onClick={() => setPasoActual(pasoActual - 1)}
-    disabled={pasoActual === 1}
->
-    Anterior
-</button>
-                </p>
+    <button
+        onClick={() => setPasoActual(pasoActual + 1)}
+        disabled={pasoActual === 5}
+    >
+        Siguiente
+    </button>
 
-            </section>
+    <button
+        onClick={() => setPasoActual(pasoActual - 1)}
+        disabled={pasoActual === 1}
+    >
+        Anterior
+    </button>
 
+</section>
         </main>
     );
 }
