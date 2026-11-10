@@ -1,0 +1,50 @@
+.cartelera {
+    width: 85%;
+    max-width: 900px;
+
+    margin: 40px auto;
+    padding: 30px;
+
+    background-color: black;
+    color: white;
+
+    border: 2px solid #CBAC59;
+    border-radius: 10px;
+}
+
+.cartelera h2 {
+    color: #CBAC59;
+    text-align: center;
+}
+
+.lista-peliculas {
+    display: flex;
+    justify-content: center;
+
+    gap: 30px;
+
+    flex-wrap: wrap;
+}
+
+.boton-horarios {
+    display: block;
+
+    width: 250px;
+
+    margin: 30px auto 0;
+    padding: 15px;
+
+    background-color: #CBAC59;
+    color: black;
+
+    text-align: center;
+    text-decoration: none;
+
+    border-radius: 10px;
+
+    font-size: 18px;
+}
+
+.boton-horarios:hover {
+    background-color: white;
+}
