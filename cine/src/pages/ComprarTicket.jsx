@@ -218,6 +218,21 @@ function ComprarTicket() {
     }
 
 
+    // Convierte los valores internos en textos más claros
+    // para mostrarlos al usuario en el resumen final.
+    const nombresPeliculas = {
+        oppenheimer: "Oppenheimer",
+        barbie: "Barbie",
+        coraline: "Coraline"
+    };
+
+    const nombresDias = {
+        hoy: "Hoy",
+        manana: "Mañana",
+        viernes: "Próximo viernes"
+    };
+
+
     return (
         <main className="pagina-compra">
 
@@ -685,11 +700,11 @@ function ComprarTicket() {
                     <div className="resumen-compra">
 
                         <p>
-                            <strong>Película:</strong> {pelicula}
+                            <strong>Película:</strong> {nombresPeliculas[pelicula] || pelicula}
                         </p>
 
                         <p>
-                            <strong>Día:</strong> {dia}
+                            <strong>Día:</strong> {nombresDias[dia] || dia}
                         </p>
 
                         <p>
@@ -742,11 +757,11 @@ function ComprarTicket() {
                     <h2>¡Compra realizada con éxito!</h2>
 
                     <p>
-                        Tu compra para {pelicula} fue confirmada.
+                        Tu compra para {nombresPeliculas[pelicula] || pelicula} fue confirmada.
                     </p>
 
                     <p>
-                        {dia} · {horario}
+                        {nombresDias[dia] || dia} · {horario}
                     </p>
 
                     <p>
