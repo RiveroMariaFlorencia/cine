@@ -228,3 +228,28 @@
 .compra-exitosa p {
     margin-bottom: 10px;
 }
+.campo-seleccion {
+    display: flex;
+    flex-direction: column;
+
+    width: 400px;
+    max-width: 100%;
+
+    margin: 0 auto 30px;
+
+    gap: 10px;
+}
+
+.campo-seleccion label {
+    color: #CBAC59;
+    font-size: 18px;
+}
+
+.campo-seleccion select {
+    padding: 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    font-size: 16px;
+}

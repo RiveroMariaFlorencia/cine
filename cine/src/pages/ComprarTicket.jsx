@@ -10,16 +10,27 @@ function ComprarTicket() {
     // Ejemplo:
     // /comprar-ticket?pelicula=barbie&dia=hoy&horario=17:00
     const [searchParams] = useSearchParams();
+    // Recuperamos los parámetros de la URL.
+    // Si el usuario viene desde Horarios, ya contienen valores.
+    // Si entra directamente a Comprar Ticket, serán null.
+    const peliculaParam = searchParams.get("pelicula");
+    const diaParam = searchParams.get("dia");
+    const horarioParam = searchParams.get("horario");
 
-    const pelicula = searchParams.get("pelicula");
-    const dia = searchParams.get("dia");
-    const horario = searchParams.get("horario");
+
+    // Estados de la selección de película y función.
+    // Si llegaron parámetros, los usamos como valor inicial.
+    // Si no llegaron, empiezan vacíos.
+    const [pelicula, setPelicula] = useState(peliculaParam || "");
+    const [dia, setDia] = useState(diaParam || "");
+    const [horario, setHorario] = useState(horarioParam || "");
+    
 
     // Si ya vienen película, día y horario,
     // los pasos 1 y 2 ya están resueltos.
     // Por eso comenzamos directamente en Entradas (paso 3).
     const pasoInicial =
-        pelicula && dia && horario ? 3 : 1;
+        peliculaParam && diaParam && horarioParam ? 3 : 1;
 
     const [pasoActual, setPasoActual] = useState(pasoInicial);
 
@@ -47,6 +58,37 @@ function ComprarTicket() {
     const PRECIO_GENERAL = 12000;
     const PRECIO_MENOR = 8000;
     const PRECIO_JUBILADO = 9000;
+
+
+    // Horarios disponibles para cada película.
+    // Se usan cuando el usuario entra directamente a Comprar Ticket.
+    const programacion = {
+        oppenheimer: {
+            hoy: ["16:30", "19:00", "22:15"],
+            manana: ["15:30", "18:30", "21:30"],
+            viernes: ["17:00", "20:00", "23:00"]
+        },
+
+        barbie: {
+            hoy: ["17:00", "20:00", "22:30"],
+            manana: ["16:00", "19:00", "21:30"],
+            viernes: ["15:30", "18:00", "20:30"]
+        },
+
+        coraline: {
+            hoy: ["15:30", "18:30", "21:30"],
+            manana: ["16:30", "19:30", "22:30"],
+            viernes: ["17:30", "20:30", "23:00"]
+        }
+    };
+
+    // Busca los horarios correspondientes a la película y día elegidos.
+    // Si todavía falta algún dato, devuelve un array vacío.
+    const horariosDisponibles =
+        pelicula && dia
+            ? programacion[pelicula]?.[dia] || []
+            : [];
+
 
     // El total se calcula usando los valores actuales de los estados.
     // No necesitamos modificar el HTML manualmente:
@@ -163,6 +205,19 @@ function ComprarTicket() {
     }
 
 
+    // Verifica que el usuario haya elegido día y horario.
+    function validarHorario() {
+
+        if (dia === "" || horario === "") {
+            alert("Debes seleccionar un día y un horario");
+            return;
+        }
+
+        // Si todo está seleccionado, avanzamos a Entradas.
+        setPasoActual(3);
+    }
+
+
     return (
         <main className="pagina-compra">
 
@@ -205,365 +260,512 @@ function ComprarTicket() {
 
 </div>
 
-            <section className="contenedor-compra">
+<section className="contenedor-compra">
+    
+    {/* PASO 1: PELÍCULA */}
+    {pasoActual === 1 && (
 
-    {/* Muestra los datos solo si llegaron por la URL */}
-    {pelicula && dia && horario && (
-        <div>
-            <p>Película: {pelicula}</p>
-            <p>Día: {dia}</p>
-            <p>Horario: {horario}</p>
+        <div className="contenido-paso">
+
+            <h2>Seleccioná una película</h2>
+
+            <div className="campo-seleccion">
+
+                <label htmlFor="pelicula">
+                    Película
+                </label>
+
+                <select
+                    id="pelicula"
+                    value={pelicula}
+                    onChange={(evento) => {
+                        setPelicula(evento.target.value);
+
+                        // Si cambia la película, limpiamos la función
+                        // elegida anteriormente para evitar datos incoherentes.
+                        setDia("");
+                        setHorario("");
+                    }}
+                >
+                    <option value="">
+                        Seleccioná una película
+                    </option>
+
+                    <option value="oppenheimer">
+                        Oppenheimer
+                    </option>
+
+                    <option value="barbie">
+                        Barbie
+                    </option>
+
+                    <option value="coraline">
+                        Coraline
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div className="botones-navegacion">
+
+                <button
+                    className="boton-siguiente"
+                    onClick={() => {
+
+                        if (pelicula === "") {
+                            alert("Debes seleccionar una película");
+                            return;
+                        }
+
+                        setPasoActual(2);
+                    }}
+                >
+                    Siguiente
+                </button>
+
+            </div>
+
         </div>
+
     )}
 
+    {/* PASO 2: HORARIO */}
+    {pasoActual === 2 && (
+
+        <div className="contenido-paso">
+
+            <h2>Seleccioná día y horario</h2>
+
+            {/* Selección del día */}
+            <div className="campo-seleccion">
+
+                <label htmlFor="dia">
+                    Día
+                </label>
+
+                <select
+                    id="dia"
+                    value={dia}
+                    onChange={(evento) => {
+
+                        setDia(evento.target.value);
+
+                        // Si cambia el día, limpiamos el horario anterior.
+                        setHorario("");
+                    }}
+                >
+                    <option value="">
+                        Seleccioná un día
+                    </option>
+
+                    <option value="hoy">
+                        Hoy
+                    </option>
+
+                    <option value="manana">
+                        Mañana
+                    </option>
+
+                    <option value="viernes">
+                        Próximo viernes
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            {/* Selección del horario */}
+            <div className="campo-seleccion">
+
+                <label htmlFor="horario">
+                    Horario
+                </label>
+
+                <select
+                    id="horario"
+                    value={horario}
+                    onChange={(evento) =>
+                        setHorario(evento.target.value)
+                    }
+                    disabled={dia === ""}
+                >
+
+                    <option value="">
+                        Seleccioná un horario
+                    </option>
+
+                    {horariosDisponibles.map((hora) => (
+
+                        <option
+                            key={hora}
+                            value={hora}
+                        >
+                            {hora}
+                        </option>
+
+                    ))}
+
+                </select>
+
+            </div>
+
+
+            <div className="botones-navegacion">
+
+                <button
+                    className="boton-anterior"
+                    onClick={() => setPasoActual(1)}
+                >
+                    Anterior
+                </button>
+
+                <button
+                    className="boton-siguiente"
+                    onClick={validarHorario}
+                >
+                    Siguiente
+                </button>
+
+            </div>
+
+        </div>
+
+    )}
+
+
+
     {/* PASO 3: ENTRADAS */}
-{pasoActual === 3 && (
+    {pasoActual === 3 && (
 
-    <div className="contenido-paso">
+        <div className="contenido-paso">
 
-        <h2>Seleccioná tus entradas</h2>
+            <h2>Seleccioná tus entradas</h2>
 
-        {/* Entrada General */}
-        <div className="tipo-entrada">
+            {/* Entrada General */}
+            <div className="tipo-entrada">
 
-            <div>
-                <h3>General</h3>
-                <p>$12.000</p>
+                <div>
+                    <h3>General</h3>
+                    <p>$12.000</p>
+                </div>
+
+                <select
+                    value={general}
+                    onChange={(evento) =>
+                        setGeneral(Number(evento.target.value))
+                    }
+                >
+                    <option value={0}>0</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                </select>
+
             </div>
 
-            <select
-                value={general}
-                onChange={(evento) =>
-                    setGeneral(Number(evento.target.value))
-                }
-            >
-                <option value={0}>0</option>
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-            </select>
 
-        </div>
+            {/* Entrada Menor */}
+            <div className="tipo-entrada">
 
+                <div>
+                    <h3>Menor</h3>
+                    <p>$8.000</p>
+                </div>
 
-        {/* Entrada Menor */}
-        <div className="tipo-entrada">
+                <select
+                    value={menor}
+                    onChange={(evento) =>
+                        setMenor(Number(evento.target.value))
+                    }
+                >
+                    <option value={0}>0</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                </select>
 
-            <div>
-                <h3>Menor</h3>
-                <p>$8.000</p>
             </div>
 
-            <select
-                value={menor}
-                onChange={(evento) =>
-                    setMenor(Number(evento.target.value))
-                }
-            >
-                <option value={0}>0</option>
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-            </select>
 
-        </div>
+            {/* Entrada Jubilado */}
+            <div className="tipo-entrada">
 
+                <div>
+                    <h3>Jubilado</h3>
+                    <p>$9.000</p>
+                </div>
 
-        {/* Entrada Jubilado */}
-        <div className="tipo-entrada">
+                <select
+                    value={jubilado}
+                    onChange={(evento) =>
+                        setJubilado(Number(evento.target.value))
+                    }
+                >
+                    <option value={0}>0</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                </select>
 
-            <div>
-                <h3>Jubilado</h3>
-                <p>$9.000</p>
             </div>
 
-            <select
-                value={jubilado}
-                onChange={(evento) =>
-                    setJubilado(Number(evento.target.value))
-                }
-            >
-                <option value={0}>0</option>
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-            </select>
+
+            {/* Total calculado automáticamente */}
+            <div className="total-entradas">
+                Total: ${total.toLocaleString("es-AR")}
+            </div>
+
+            <div className="botones-navegacion">
+
+                <button
+                    className="boton-anterior"
+                    onClick={() => setPasoActual(2)}
+                >
+                    Anterior
+                </button>
+
+                <button
+                    className="boton-siguiente"
+                    onClick={validarEntradas}
+                >
+                    Siguiente
+                </button>
+
+            </div>
+            
+        </div>
+
+    )}
+
+    {/* PASO 4: PAGO */}
+    {pasoActual === 4 && (
+
+        <div className="contenido-paso">
+
+            <h2>Datos de pago</h2>
+
+            <div className="campo-pago">
+                <label htmlFor="nombre">
+                    Nombre y apellido
+                </label>
+
+                <input
+                    id="nombre"
+                    type="text"
+                    value={nombre}
+                    onChange={(evento) =>
+                        setNombre(evento.target.value)
+                    }
+                />
+            </div>
+
+
+            <div className="campo-pago">
+                <label htmlFor="email">
+                    Email
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(evento) =>
+                        setEmail(evento.target.value)
+                    }
+                />
+            </div>
+
+
+            <div className="campo-pago">
+                <label htmlFor="tarjeta">
+                    Número de tarjeta
+                </label>
+
+                <input
+                    id="tarjeta"
+                    type="text"
+                    value={tarjeta}
+                    maxLength={16}
+                    onChange={(evento) =>
+                        setTarjeta(evento.target.value)
+                    }
+                />
+            </div>
+
+
+            <div className="campo-pago">
+                <label htmlFor="titular">
+                    Titular
+                </label>
+
+                <input
+                    id="titular"
+                    type="text"
+                    value={titular}
+                    onChange={(evento) =>
+                        setTitular(evento.target.value)
+                    }
+                />
+            </div>
+
+
+            <div className="campo-pago">
+                <label htmlFor="vencimiento">
+                    Vencimiento
+                </label>
+
+                <input
+                    id="vencimiento"
+                    type="text"
+                    placeholder="MM/AA"
+                    value={vencimiento}
+                    maxLength={5}
+                    onChange={(evento) =>
+                        setVencimiento(evento.target.value)
+                    }
+                />
+            </div>
+
+
+            <div className="campo-pago">
+                <label htmlFor="cvv">
+                    CVV
+                </label>
+
+                <input
+                    id="cvv"
+                    type="text"
+                    value={cvv}
+                    maxLength={3}
+                    onChange={(evento) =>
+                        setCvv(evento.target.value)
+                    }
+                />
+            </div>
+
+
+            <div className="botones-navegacion">
+
+                <button
+                    className="boton-anterior"
+                    onClick={() => setPasoActual(3)}
+                >
+                    Anterior
+                </button>
+
+                <button
+                    className="boton-siguiente"
+                    onClick={validarPago}
+                >
+                    Siguiente
+                </button>
+
+            </div>
 
         </div>
 
+    )}
 
-        {/* Total calculado automáticamente */}
-        <div className="total-entradas">
-            Total: ${total.toLocaleString("es-AR")}
-        </div>
+    {/* PASO 5: FINALIZAR */}
+    {pasoActual === 5 && (
 
+        <div className="contenido-paso">
 
-        <div className="botones-navegacion">
+            {!compraFinalizada ? (
 
-            <button
-                className="boton-anterior"
-                onClick={() => setPasoActual(2)}
-            >
-                Anterior
-            </button>
+                <>
+                    <h2>Resumen de compra</h2>
 
-            <button
-                className="boton-siguiente"
-                onClick={validarEntradas}
-            >
-                Siguiente
-            </button>
+                    <div className="resumen-compra">
 
-        </div>
+                        <p>
+                            <strong>Película:</strong> {pelicula}
+                        </p>
 
-    </div>
+                        <p>
+                            <strong>Día:</strong> {dia}
+                        </p>
 
-)}
+                        <p>
+                            <strong>Horario:</strong> {horario}
+                        </p>
 
-{/* PASO 4: PAGO */}
-{pasoActual === 4 && (
+                        <p>
+                            <strong>Entrada General:</strong> {general}
+                        </p>
 
-    <div className="contenido-paso">
+                        <p>
+                            <strong>Entrada Menor:</strong> {menor}
+                        </p>
 
-        <h2>Datos de pago</h2>
+                        <p>
+                            <strong>Entrada Jubilado:</strong> {jubilado}
+                        </p>
 
-        <div className="campo-pago">
-            <label htmlFor="nombre">
-                Nombre y apellido
-            </label>
+                        <p className="total-resumen">
+                            <strong>
+                                Total: ${total.toLocaleString("es-AR")}
+                            </strong>
+                        </p>
 
-            <input
-                id="nombre"
-                type="text"
-                value={nombre}
-                onChange={(evento) =>
-                    setNombre(evento.target.value)
-                }
-            />
-        </div>
+                    </div>
 
+                    <div className="botones-navegacion">
 
-        <div className="campo-pago">
-            <label htmlFor="email">
-                Email
-            </label>
+                        <button
+                            className="boton-anterior"
+                            onClick={() => setPasoActual(4)}
+                        >
+                            Anterior
+                        </button>
 
-            <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(evento) =>
-                    setEmail(evento.target.value)
-                }
-            />
-        </div>
+                        <button
+                            className="boton-siguiente"
+                            onClick={finalizarCompra}
+                        >
+                            Confirmar compra
+                        </button>
 
+                    </div>
+                </>
 
-        <div className="campo-pago">
-            <label htmlFor="tarjeta">
-                Número de tarjeta
-            </label>
+            ) : (
 
-            <input
-                id="tarjeta"
-                type="text"
-                value={tarjeta}
-                maxLength={16}
-                onChange={(evento) =>
-                    setTarjeta(evento.target.value)
-                }
-            />
-        </div>
+                <div className="compra-exitosa">
 
-
-        <div className="campo-pago">
-            <label htmlFor="titular">
-                Titular
-            </label>
-
-            <input
-                id="titular"
-                type="text"
-                value={titular}
-                onChange={(evento) =>
-                    setTitular(evento.target.value)
-                }
-            />
-        </div>
-
-
-        <div className="campo-pago">
-            <label htmlFor="vencimiento">
-                Vencimiento
-            </label>
-
-            <input
-                id="vencimiento"
-                type="text"
-                placeholder="MM/AA"
-                value={vencimiento}
-                maxLength={5}
-                onChange={(evento) =>
-                    setVencimiento(evento.target.value)
-                }
-            />
-        </div>
-
-
-        <div className="campo-pago">
-            <label htmlFor="cvv">
-                CVV
-            </label>
-
-            <input
-                id="cvv"
-                type="text"
-                value={cvv}
-                maxLength={3}
-                onChange={(evento) =>
-                    setCvv(evento.target.value)
-                }
-            />
-        </div>
-
-
-        <div className="botones-navegacion">
-
-            <button
-                className="boton-anterior"
-                onClick={() => setPasoActual(3)}
-            >
-                Anterior
-            </button>
-
-            <button
-                className="boton-siguiente"
-                onClick={validarPago}
-            >
-                Siguiente
-            </button>
-
-        </div>
-
-    </div>
-
-)}
-
-{/* PASO 5: FINALIZAR */}
-{pasoActual === 5 && (
-
-    <div className="contenido-paso">
-
-        {!compraFinalizada ? (
-
-            <>
-                <h2>Resumen de compra</h2>
-
-                <div className="resumen-compra">
+                    <h2>¡Compra realizada con éxito!</h2>
 
                     <p>
-                        <strong>Película:</strong> {pelicula}
+                        Tu compra para {pelicula} fue confirmada.
                     </p>
 
                     <p>
-                        <strong>Día:</strong> {dia}
+                        {dia} · {horario}
                     </p>
 
                     <p>
-                        <strong>Horario:</strong> {horario}
-                    </p>
-
-                    <p>
-                        <strong>Entrada General:</strong> {general}
-                    </p>
-
-                    <p>
-                        <strong>Entrada Menor:</strong> {menor}
-                    </p>
-
-                    <p>
-                        <strong>Entrada Jubilado:</strong> {jubilado}
-                    </p>
-
-                    <p className="total-resumen">
-                        <strong>
-                            Total: ${total.toLocaleString("es-AR")}
-                        </strong>
+                        Total pagado: ${total.toLocaleString("es-AR")}
                     </p>
 
                 </div>
 
-                <div className="botones-navegacion">
+            )}
 
-                    <button
-                        className="boton-anterior"
-                        onClick={() => setPasoActual(4)}
-                    >
-                        Anterior
-                    </button>
+        </div>
 
-                    <button
-                        className="boton-siguiente"
-                        onClick={finalizarCompra}
-                    >
-                        Confirmar compra
-                    </button>
-
-                </div>
-            </>
-
-        ) : (
-
-            <div className="compra-exitosa">
-
-                <h2>¡Compra realizada con éxito!</h2>
-
-                <p>
-                    Tu compra para {pelicula} fue confirmada.
-                </p>
-
-                <p>
-                    {dia} · {horario}
-                </p>
-
-                <p>
-                    Total pagado: ${total.toLocaleString("es-AR")}
-                </p>
-
-            </div>
-
-        )}
-
-    </div>
-
-)}
+    )}
 
 
-    <p>
-        Paso actual: {pasoActual}
-    </p>
-
-    <button
-        onClick={() => setPasoActual(pasoActual + 1)}
-        disabled={pasoActual === 5}
-    >
-        Siguiente
-    </button>
-
-    <button
-        onClick={() => setPasoActual(pasoActual - 1)}
-        disabled={pasoActual === 1}
-    >
-        Anterior
-    </button>
-
-</section>
-        </main>
-    );
-}
+    </section>
+            </main>
+        );
+    }
 
 // Exportamos el componente para poder usarlo
 // desde App.jsx mediante React Router.
