@@ -30,6 +30,15 @@ function ComprarTicket() {
     const [menor, setMenor] = useState(0);
     const [jubilado, setJubilado] = useState(0);
 
+    // Estados del formulario de pago.
+    // Cada estado guarda lo que escribe el usuario en un input.
+    const [nombre, setNombre] = useState("");
+    const [email, setEmail] = useState("");
+    const [tarjeta, setTarjeta] = useState("");
+    const [titular, setTitular] = useState("");
+    const [vencimiento, setVencimiento] = useState("");
+    const [cvv, setCvv] = useState("");
+
     // Precios de cada tipo de entrada
     const PRECIO_GENERAL = 12000;
     const PRECIO_MENOR = 8000;
@@ -65,6 +74,60 @@ function ComprarTicket() {
 
         // Si la validación es correcta, avanzamos al paso Pago.
         setPasoActual(4);
+    }
+
+
+    // Valida los datos ingresados antes de avanzar al resumen.
+    function validarPago() {
+
+        // trim() elimina espacios al principio y al final.
+        if (
+            nombre.trim() === "" ||
+            email.trim() === "" ||
+            tarjeta.trim() === "" ||
+            titular.trim() === "" ||
+            vencimiento.trim() === "" ||
+            cvv.trim() === ""
+        ) {
+            alert("Debes completar todos los campos");
+            return;
+        }
+
+        // Valida un formato básico de email.
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!regexEmail.test(email)) {
+            alert("Email no válido");
+            return;
+        }
+
+        // La tarjeta debe tener exactamente 16 números.
+        const regexTarjeta = /^\d{16}$/;
+
+        if (!regexTarjeta.test(tarjeta)) {
+            alert("La tarjeta debe tener 16 dígitos");
+            return;
+        }
+
+        // El vencimiento debe tener formato MM/AA.
+        const regexVencimiento = /^(0[1-9]|1[0-2])\/\d{2}$/;
+
+        if (!regexVencimiento.test(vencimiento)) {
+            alert("El vencimiento debe tener formato MM/AA");
+            return;
+        }
+
+        // El CVV debe tener exactamente 3 números.
+        const regexCvv = /^\d{3}$/;
+
+        if (!regexCvv.test(cvv)) {
+            alert("El CVV debe tener 3 dígitos");
+            return;
+        }
+
+        // Si todas las validaciones son correctas,
+        // avanzamos al Paso 5.
+        setPasoActual(5);
     }
 
     return (
@@ -225,6 +288,134 @@ function ComprarTicket() {
 
 )}
 
+{/* PASO 4: PAGO */}
+{pasoActual === 4 && (
+
+    <div className="contenido-paso">
+
+        <h2>Datos de pago</h2>
+
+        <div className="campo-pago">
+            <label htmlFor="nombre">
+                Nombre y apellido
+            </label>
+
+            <input
+                id="nombre"
+                type="text"
+                value={nombre}
+                onChange={(evento) =>
+                    setNombre(evento.target.value)
+                }
+            />
+        </div>
+
+
+        <div className="campo-pago">
+            <label htmlFor="email">
+                Email
+            </label>
+
+            <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(evento) =>
+                    setEmail(evento.target.value)
+                }
+            />
+        </div>
+
+
+        <div className="campo-pago">
+            <label htmlFor="tarjeta">
+                Número de tarjeta
+            </label>
+
+            <input
+                id="tarjeta"
+                type="text"
+                value={tarjeta}
+                maxLength={16}
+                onChange={(evento) =>
+                    setTarjeta(evento.target.value)
+                }
+            />
+        </div>
+
+
+        <div className="campo-pago">
+            <label htmlFor="titular">
+                Titular
+            </label>
+
+            <input
+                id="titular"
+                type="text"
+                value={titular}
+                onChange={(evento) =>
+                    setTitular(evento.target.value)
+                }
+            />
+        </div>
+
+
+        <div className="campo-pago">
+            <label htmlFor="vencimiento">
+                Vencimiento
+            </label>
+
+            <input
+                id="vencimiento"
+                type="text"
+                placeholder="MM/AA"
+                value={vencimiento}
+                maxLength={5}
+                onChange={(evento) =>
+                    setVencimiento(evento.target.value)
+                }
+            />
+        </div>
+
+
+        <div className="campo-pago">
+            <label htmlFor="cvv">
+                CVV
+            </label>
+
+            <input
+                id="cvv"
+                type="text"
+                value={cvv}
+                maxLength={3}
+                onChange={(evento) =>
+                    setCvv(evento.target.value)
+                }
+            />
+        </div>
+
+
+        <div className="botones-navegacion">
+
+            <button
+                className="boton-anterior"
+                onClick={() => setPasoActual(3)}
+            >
+                Anterior
+            </button>
+
+            <button
+                className="boton-siguiente"
+                onClick={validarPago}
+            >
+                Siguiente
+            </button>
+
+        </div>
+
+    </div>
+
+)}
 
     <p>
         Paso actual: {pasoActual}
