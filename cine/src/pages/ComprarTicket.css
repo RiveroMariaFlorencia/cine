@@ -1,0 +1,31 @@
+.pagina-compra {
+    min-height: 100vh;
+
+    padding: 30px 20px;
+
+    color: white;
+}
+
+.pagina-compra h1 {
+    text-align: center;
+
+    color: #CBAC59;
+
+    margin-bottom: 30px;
+}
+
+.contenedor-compra {
+    width: 900px;
+    max-width: 90%;
+
+    margin: 0 auto;
+
+    padding: 25px 40px;
+
+    background-color: #2B2B2B;
+
+    border: 2px solid #CBAC59;
+    border-radius: 12px;
+
+    text-align: center;
+}
