@@ -1,0 +1,52 @@
+.tarjeta-pelicula {
+    position: relative;
+    width: 200px;
+}
+
+.portada-pelicula {
+    width: 200px;
+    height: 285px;
+
+    object-fit: cover;
+
+    cursor: pointer;
+
+    transition: transform 0.3s;
+}
+
+.portada-pelicula:hover {
+    transform: translateY(-10px);
+}
+
+.descripcion-pelicula {
+    position: absolute;
+
+    top: 0;
+    left: 105%;
+
+    width: 250px;
+
+    background-color: #111;
+    color: white;
+
+    border: 1px solid #CBAC59;
+    border-radius: 10px;
+
+    padding: 15px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateX(-10px);
+
+    transition: all 0.3s;
+
+    z-index: 10;
+}
+
+.tarjeta-pelicula:hover .descripcion-pelicula {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateX(0);
+}

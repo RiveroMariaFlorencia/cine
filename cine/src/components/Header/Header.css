@@ -1,0 +1,42 @@
+.header {
+    width: 100%;
+    height: 730px;
+
+    background-image: url("../../assets/img/CineMasterBannerInicio.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    gap: 205px;
+}
+
+.eslogan {
+    margin-top: 25px;
+}
+
+.eslogan p {
+    font-size: 30px;
+}
+
+.titulo h1 {
+    font-size: 70px;
+    color: #CBAC59;
+}
+
+.comprarRef {
+    color: #CBAC59;
+    text-decoration: none;
+    font-size: 25px;
+}
+
+.comprarRef:hover {
+    color: white;
+}

@@ -1,0 +1,97 @@
+.pagina-horarios {
+    min-height: 100vh;
+    color: white;
+    padding: 30px 20px;
+}
+
+.titulo-horarios {
+    text-align: center;
+
+    color: #CBAC59;
+
+    margin-bottom: 30px;
+}
+
+.contenedor-horarios {
+    width: 1000px;
+    max-width: 90%;
+
+    margin: 0 auto;
+}
+
+.tarjeta-horario {
+    background-color: #2B2B2B;
+
+    border: 2px solid #CBAC59;
+    border-radius: 12px;
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-pelicula {
+    width: 30%;
+}
+
+.info-pelicula h2 {
+    color: #CBAC59;
+
+    margin-bottom: 10px;
+}
+
+.horarios-pelicula {
+    width: 65%;
+
+    display: flex;
+    justify-content: space-around;
+
+    gap: 20px;
+}
+
+.dia {
+    width: 170px;
+
+    text-align: center;
+}
+
+.dia p {
+    color: #CBAC59;
+
+    min-height: 45px;
+
+    margin-bottom: 15px;
+}
+
+.lista-horarios {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.boton-horario {
+    width: 100px;
+
+    padding: 10px;
+
+    background-color: #CBAC59;
+    color: black;
+
+    text-decoration: none;
+
+    border-radius: 10px;
+
+    text-align: center;
+}
+
+.boton-horario:hover {
+    background-color: white;
+
+    transform: scale(1.05);
+}
