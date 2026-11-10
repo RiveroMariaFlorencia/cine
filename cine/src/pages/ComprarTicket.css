@@ -1,11 +1,15 @@
+/*PÁGINA DE COMPRA*/
+
 .pagina-compra {
-    min-height: 100vh;
+    width: 100%;
 
     padding: 30px 20px;
 
     color: white;
 }
 
+
+/* Título principal */
 .pagina-compra h1 {
     text-align: center;
 
@@ -13,6 +17,74 @@
 
     margin-bottom: 30px;
 }
+
+
+/*STEPPER*/
+
+.stepper {
+    width: 850px;
+    max-width: 90%;
+
+    margin: 0 auto 30px;
+
+    display: flex;
+    justify-content: center;
+
+    gap: 25px;
+}
+
+
+.paso {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 8px;
+
+    color: gray;
+}
+
+
+.circulo {
+    width: 40px;
+    height: 40px;
+
+    border: 2px solid gray;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.paso.activo {
+    color: #CBAC59;
+}
+
+
+.paso.activo .circulo {
+    border-color: #CBAC59;
+
+    color: #CBAC59;
+}
+
+
+.paso.completado {
+    color: #CBAC59;
+}
+
+
+.paso.completado .circulo {
+    background-color: #CBAC59;
+
+    border-color: #CBAC59;
+
+    color: black;
+}
+
+
+/*CONTENEDOR*/
 
 .contenedor-compra {
     width: 900px;
@@ -30,70 +102,58 @@
     text-align: center;
 }
 
-.stepper {
-    width: 850px;
-    max-width: 90%;
-
-    margin: 0 auto 30px;
-
-    display: flex;
-    justify-content: center;
-
-    gap: 25px;
-}
-
-.paso {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    gap: 8px;
-
-    color: gray;
-}
-
-.circulo {
-    width: 40px;
-    height: 40px;
-
-    border: 2px solid gray;
-    border-radius: 50%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.paso.activo {
-    color: #CBAC59;
-}
-
-.paso.activo .circulo {
-    border-color: #CBAC59;
-    color: #CBAC59;
-}
-
-.paso.completado {
-    color: #CBAC59;
-}
-
-.paso.completado .circulo {
-    background-color: #CBAC59;
-    border-color: #CBAC59;
-
-    color: black;
-}
 
 .contenido-paso {
+    width: 100%;
+
     text-align: left;
 }
 
+
 .contenido-paso h2 {
     text-align: center;
+
     color: #CBAC59;
 
     margin-bottom: 25px;
 }
+
+
+/*PELÍCULA Y HORARIO*/
+
+.campo-seleccion {
+    width: 400px;
+    max-width: 100%;
+
+    margin: 0 auto 30px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.campo-seleccion label {
+    color: #CBAC59;
+
+    font-size: 18px;
+}
+
+
+.campo-seleccion select {
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    font-size: 16px;
+}
+
+
+/*ENTRADAS*/
 
 .tipo-entrada {
     display: flex;
@@ -105,9 +165,11 @@
     border-bottom: 1px solid #555;
 }
 
+
 .tipo-entrada h3 {
     margin-bottom: 5px;
 }
+
 
 .tipo-entrada select {
     width: 80px;
@@ -119,6 +181,7 @@
     font-size: 16px;
 }
 
+
 .total-entradas {
     margin-top: 25px;
 
@@ -129,39 +192,8 @@
     font-size: 26px;
 }
 
-.botones-navegacion {
-    display: flex;
-    justify-content: space-between;
 
-    margin-top: 30px;
-}
-
-.boton-siguiente,
-.boton-anterior {
-    padding: 12px 25px;
-
-    border: none;
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    font-size: 16px;
-}
-
-.boton-siguiente {
-    background-color: #CBAC59;
-    color: black;
-}
-
-.boton-anterior {
-    background-color: #555;
-    color: white;
-}
-
-.boton-siguiente:hover,
-.boton-anterior:hover {
-    transform: scale(1.05);
-}
+/*FORMULARIO DE PAGO*/
 
 .campo-pago {
     display: flex;
@@ -170,11 +202,13 @@
     margin-bottom: 15px;
 }
 
+
 .campo-pago label {
     width: 190px;
 
     color: #CBAC59;
 }
+
 
 .campo-pago input {
     width: 400px;
@@ -188,68 +222,260 @@
     font-size: 16px;
 }
 
+
+/*BOTONES*/
+
+.botones-navegacion {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-top: 30px;
+}
+
+
+.boton-siguiente,
+.boton-anterior {
+    padding: 12px 25px;
+
+    border: none;
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+
+.boton-siguiente {
+    margin-left: auto;
+
+    background-color: #CBAC59;
+
+    color: black;
+}
+
+
+.boton-anterior {
+    background-color: #555;
+
+    color: white;
+}
+
+
+.boton-siguiente:hover,
+.boton-anterior:hover {
+    transform: scale(1.05);
+}
+
+
+/*RESUMEN*/
+
 .resumen-compra {
+    margin-top: 20px;
+
+    padding: 20px;
+
     background-color: #1A1A1A;
 
     border: 1px solid #CBAC59;
     border-radius: 10px;
-
-    padding: 20px;
-
-    margin-top: 20px;
 }
+
 
 .resumen-compra p {
     margin-bottom: 12px;
 }
 
+
 .total-resumen {
+    margin-top: 20px;
+
+    text-align: center;
+
     color: #CBAC59;
 
     font-size: 24px;
-
-    text-align: center;
-
-    margin-top: 20px;
 }
+
+
+/*COMPRA EXITOSA*/
 
 .compra-exitosa {
-    text-align: center;
-
     padding: 30px;
+
+    text-align: center;
 }
+
 
 .compra-exitosa h2 {
-    color: #CBAC59;
-
     margin-bottom: 20px;
+
+    color: #CBAC59;
 }
+
 
 .compra-exitosa p {
     margin-bottom: 10px;
 }
-.campo-seleccion {
-    display: flex;
-    flex-direction: column;
 
-    width: 400px;
-    max-width: 100%;
 
-    margin: 0 auto 30px;
+/*RESPONSIVE - CELULARES*/
 
-    gap: 10px;
-}
+@media (max-width: 600px) {
 
-.campo-seleccion label {
-    color: #CBAC59;
-    font-size: 18px;
-}
+    .pagina-compra {
+        width: 100%;
 
-.campo-seleccion select {
-    padding: 12px;
+        padding: 20px 10px;
+    }
 
-    border: none;
-    border-radius: 6px;
 
-    font-size: 16px;
+    .pagina-compra h1 {
+        margin-bottom: 20px;
+
+        font-size: 24px;
+    }
+
+
+    /* STEPPER */
+
+    .stepper {
+        width: 100%;
+        max-width: 100%;
+
+        margin: 0 auto 20px;
+
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+
+        gap: 0;
+    }
+
+
+    .paso {
+        min-width: 0;
+
+        gap: 5px;
+
+        text-align: center;
+    }
+
+
+    .paso span {
+        font-size: 9px;
+
+        white-space: nowrap;
+    }
+
+
+    .circulo {
+        width: 28px;
+        height: 28px;
+
+        flex-shrink: 0;
+
+        font-size: 13px;
+    }
+
+
+    /* CONTENEDOR */
+
+    .contenedor-compra {
+        width: 100%;
+        max-width: 100%;
+
+        padding: 20px 15px;
+    }
+
+
+    .contenido-paso h2 {
+        font-size: 20px;
+    }
+
+
+    /* PELÍCULA Y HORARIO */
+
+    .campo-seleccion {
+        width: 100%;
+    }
+
+
+    .campo-seleccion select {
+        width: 100%;
+    }
+
+
+    /* ENTRADAS */
+
+    .tipo-entrada {
+        gap: 10px;
+    }
+
+
+    /* PAGO */
+
+    .campo-pago {
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 6px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .campo-pago label {
+        width: 100%;
+
+        text-align: left;
+    }
+
+
+    .campo-pago input {
+        width: 100%;
+        max-width: 100%;
+    }
+
+
+    /* BOTONES */
+
+    .botones-navegacion {
+        width: 100%;
+
+        gap: 10px;
+    }
+
+
+    .boton-siguiente,
+    .boton-anterior {
+        flex: 1;
+
+        padding: 10px;
+
+        font-size: 14px;
+    }
+
+
+    /* RESUMEN */
+
+    .resumen-compra {
+        width: 100%;
+
+        padding: 15px;
+    }
+
+
+    .total-resumen {
+        font-size: 21px;
+    }
+
+
+    .compra-exitosa {
+        padding: 20px 10px;
+    }
 }

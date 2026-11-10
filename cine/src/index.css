@@ -1,41 +1,39 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/*ESTILOS GLOBALES*/
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
 html,
 body,
 #root {
-  width: 100%;
-  min-height: 100%;
+    width: 100%;
+    min-height: 100%;
+
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  min-width: 320px;
+    min-width: 320px;
 
-  font-family: Georgia, "Times New Roman", serif;
+    font-family: Georgia, "Times New Roman", serif;
 
-  background-color: black;
-  color: white;
+    background-color: black;
+    color: white;
+
+    overflow-x: hidden;
 }
 
 a {
-  color: inherit;
+    color: inherit;
 }
 
 button,
 input,
 select,
 textarea {
-  font-family: inherit;
-}
-
-.fondo-app {
-  min-height: 100vh;
-
-  background-color: black;
-  background-repeat: repeat;
-
-  color: white;
+    font-family: inherit;
 }
