@@ -39,6 +39,10 @@ function ComprarTicket() {
     const [vencimiento, setVencimiento] = useState("");
     const [cvv, setCvv] = useState("");
 
+    // Indica si la compra ya fue confirmada.
+    // Al principio es false porque todavía no terminó.
+    const [compraFinalizada, setCompraFinalizada] = useState(false);
+
     // Precios de cada tipo de entrada
     const PRECIO_GENERAL = 12000;
     const PRECIO_MENOR = 8000;
@@ -117,6 +121,28 @@ function ComprarTicket() {
             return;
         }
 
+        // Separamos mes y año
+        const [mes, anio] = vencimiento.split("/").map(Number);
+
+        // Convertimos el año de 2 dígitos a 4 dígitos.
+        // Ejemplo: 28 -> 2028
+        const anioCompleto = 2000 + anio;
+
+        // Obtenemos la fecha actual
+        const fechaActual = new Date();
+
+        const mesActual = fechaActual.getMonth() + 1;
+        const anioActual = fechaActual.getFullYear();
+
+        // Validamos si la tarjeta está vencida
+        if (
+            anioCompleto < anioActual ||
+            (anioCompleto === anioActual && mes < mesActual)
+        ) {
+            alert("La tarjeta está vencida");
+            return;
+        }
+
         // El CVV debe tener exactamente 3 números.
         const regexCvv = /^\d{3}$/;
 
@@ -129,6 +155,13 @@ function ComprarTicket() {
         // avanzamos al Paso 5.
         setPasoActual(5);
     }
+
+    // Confirma la compra.
+    // Cambiamos el estado y React actualiza automáticamente la interfaz.
+    function finalizarCompra() {
+        setCompraFinalizada(true);
+    }
+
 
     return (
         <main className="pagina-compra">
@@ -147,7 +180,9 @@ function ComprarTicket() {
         return (
             <div
                 className={`paso ${
-                    numeroPaso === pasoActual
+                    compraFinalizada
+                        ? "completado"
+                        : numeroPaso === pasoActual
                         ? "activo"
                         : numeroPaso < pasoActual
                         ? "completado"
@@ -157,9 +192,9 @@ function ComprarTicket() {
             >
 
                 <div className="circulo">
-                    {numeroPaso < pasoActual
+                    {compraFinalizada || numeroPaso < pasoActual
                         ? "✓"
-                        : numeroPaso}
+                        : numeroPaso}    
                 </div>
 
                 <span>{nombrePaso}</span>
@@ -416,6 +451,96 @@ function ComprarTicket() {
     </div>
 
 )}
+
+{/* PASO 5: FINALIZAR */}
+{pasoActual === 5 && (
+
+    <div className="contenido-paso">
+
+        {!compraFinalizada ? (
+
+            <>
+                <h2>Resumen de compra</h2>
+
+                <div className="resumen-compra">
+
+                    <p>
+                        <strong>Película:</strong> {pelicula}
+                    </p>
+
+                    <p>
+                        <strong>Día:</strong> {dia}
+                    </p>
+
+                    <p>
+                        <strong>Horario:</strong> {horario}
+                    </p>
+
+                    <p>
+                        <strong>Entrada General:</strong> {general}
+                    </p>
+
+                    <p>
+                        <strong>Entrada Menor:</strong> {menor}
+                    </p>
+
+                    <p>
+                        <strong>Entrada Jubilado:</strong> {jubilado}
+                    </p>
+
+                    <p className="total-resumen">
+                        <strong>
+                            Total: ${total.toLocaleString("es-AR")}
+                        </strong>
+                    </p>
+
+                </div>
+
+                <div className="botones-navegacion">
+
+                    <button
+                        className="boton-anterior"
+                        onClick={() => setPasoActual(4)}
+                    >
+                        Anterior
+                    </button>
+
+                    <button
+                        className="boton-siguiente"
+                        onClick={finalizarCompra}
+                    >
+                        Confirmar compra
+                    </button>
+
+                </div>
+            </>
+
+        ) : (
+
+            <div className="compra-exitosa">
+
+                <h2>¡Compra realizada con éxito!</h2>
+
+                <p>
+                    Tu compra para {pelicula} fue confirmada.
+                </p>
+
+                <p>
+                    {dia} · {horario}
+                </p>
+
+                <p>
+                    Total pagado: ${total.toLocaleString("es-AR")}
+                </p>
+
+            </div>
+
+        )}
+
+    </div>
+
+)}
+
 
     <p>
         Paso actual: {pasoActual}

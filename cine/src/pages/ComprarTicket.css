@@ -187,3 +187,44 @@
 
     font-size: 16px;
 }
+
+.resumen-compra {
+    background-color: #1A1A1A;
+
+    border: 1px solid #CBAC59;
+    border-radius: 10px;
+
+    padding: 20px;
+
+    margin-top: 20px;
+}
+
+.resumen-compra p {
+    margin-bottom: 12px;
+}
+
+.total-resumen {
+    color: #CBAC59;
+
+    font-size: 24px;
+
+    text-align: center;
+
+    margin-top: 20px;
+}
+
+.compra-exitosa {
+    text-align: center;
+
+    padding: 30px;
+}
+
+.compra-exitosa h2 {
+    color: #CBAC59;
+
+    margin-bottom: 20px;
+}
+
+.compra-exitosa p {
+    margin-bottom: 10px;
+}
