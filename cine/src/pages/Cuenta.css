@@ -67,3 +67,34 @@
 .sesion button:hover {
     background-color: #cda85a;  /* Al pasar el cursor sobre el boton, cambia de color */
 }
+
+
+/* --- RESPONSIVE - CELULARES --- */
+@media (max-width: 600px) {
+    .contenedor {
+        flex-direction: column; /* Apila el logo arriba y la caja de sesión abajo */
+        height: auto;           /* Deja que el alto crezca según el contenido */
+        width: 100%;
+        box-sizing: border-box; /* Evita que el padding desborde el ancho */
+        margin-top: 20px;
+        padding: 20px 10px;     /* Mismo espaciado que usó tu compañera */
+        gap: 20px;              /* Reduce la separación de 100px a 20px */
+    }
+
+    .logo {
+        width: 260px;           /* Achica el logo para pantallas de celular */
+        height: 140px;
+    }
+
+    .sesion {
+        width: 95%;             /* Ocupa casi todo el ancho del celular */
+        box-sizing: border-box;
+        padding-left: 25px;     /* Baja el relleno lateral de 80px a 25px */
+        padding-right: 25px;
+    }
+
+    .sesion h2 {
+        margin-bottom: 15px;
+        font-size: 24px;        /* Mismo tamaño de título que usó tu compañera */
+    }
+}
