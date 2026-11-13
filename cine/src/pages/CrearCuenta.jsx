@@ -1,10 +1,14 @@
 import { useState } from 'react';
+import { useNavigate , Link} from 'react-router';
 import logo from '../assets/img/logo.png';
 import './Cuenta.css';
 import { validarFormularioRegistrarse } from '../functions/validacionesCuenta';
 
 
 function CrearCuenta() {
+
+  const navigate = useNavigate();
+
   //Creamos una memoria (estado) para cada input del formulario
   const [email, setEmail] = useState('');
   const [dni, setDni] = useState('');
@@ -27,12 +31,12 @@ function CrearCuenta() {
 
     // Si hay parametros, redirige a comprar-ticket en el paso 3
     if (pelicula && dia && horario) {
-        window.location.href = `/comprar-ticket?pelicula=${pelicula}&dia=${dia}&horario=${horario}`;
+      navigate(`/comprar-ticket?pelicula=${pelicula}&dia=${dia}&horario=${horario}`);
     } else {
-        // Si no hay parametros, redirige a comprar-ticket en el paso 1
-        window.location.href = '/comprar-ticket';
+      // Si no hay parametros, redirige a comprar-ticket en el paso 1
+      navigate('/comprar-ticket');
     }
-    };
+  };
 
 
   return (
@@ -97,8 +101,7 @@ function CrearCuenta() {
           </form>
 
           <br />
-
-          <a href="/mi-cuenta">Ya tienes cuenta? <br /> INGRESA!</a>
+          <Link to="/mi-cuenta">Ya tienes cuenta? <br /> INGRESA!</Link>
         </div>
       </div>
     </div>
