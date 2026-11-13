@@ -1,10 +1,14 @@
 import { useState } from 'react';
+import { useNavigate , Link } from 'react-router';
 import logo from '../assets/img/logo.png';
 import './Cuenta.css';
 import { validarFormularioIniciarSesion } from '../functions/validacionesCuenta';
 
 
 function MiCuenta() {
+    
+    const navigate = useNavigate();
+
     //Creamos una memoria (estado) para cada input del formulario
       const [email, setEmail] = useState('');
       const [password, setPassword] = useState('');
@@ -16,9 +20,8 @@ function MiCuenta() {
 
     if (!esValido) return; 
 
-    window.location.href = '/editar-catalogo';
+    navigate('/editar-catalogo');
     }
-
 
     return (
         <div className="pagina-cuenta">
@@ -59,8 +62,7 @@ function MiCuenta() {
                   </form>
         
                   <br />
-        
-                  <a href="/crear-cuenta">No tienes cuenta? <br /> CREA UNA!</a>
+                  <Link to="/crear-cuenta">No tienes cuenta?<br /> CREA UNA!</Link>
                 </div>
               </div>
             </div>
