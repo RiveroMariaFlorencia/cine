@@ -1,4 +1,5 @@
 import "./Navbar.css";
+import { Link } from "react-router";
 
 function Navbar() {
     return (
@@ -6,9 +7,9 @@ function Navbar() {
             <p className="navbar-logo">
                 CINEMASTER
             </p>
-            <a href="#" className="navbar-link">
+            <Link to='./mi-cuenta'>
                 Mi Cuenta
-            </a>
+            </Link>
         </nav>
     );
 }
