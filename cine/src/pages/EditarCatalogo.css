@@ -1,0 +1,171 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Reemplazamos "body" por ".pagina-editar" para no afectar el fondo de otras páginas */
+.pagina-editar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: black;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Barra superior exclusiva de esta pantalla */
+.pagina-editar nav {
+    width: 100%;
+    height: 40px;
+    background-color: #CBAC59;
+    color: black;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 15px;
+    position: relative;
+    align-items: center;
+}
+
+.pagina-editar nav a {
+    text-decoration: none; /* quita el subrayado de los links */
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Caja principal donde están las operaciones del catálogo */
+.editar {
+    padding: 20px;
+    width: 90%;
+    max-width: 1000px; /* Llega hasta 1000px en compu, pero se achica si la pantalla es menor */
+    background-color: #121212;
+    border: 2px solid #8c7325;
+    color: rgb(255, 255, 255);
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Evita que el .contenedor de Cuenta.css afecte a los contenedores de esta página */
+.editar .contenedor {
+    width: 100%;
+    height: auto; 
+    min-height: auto;
+    margin-top: 0;
+    display: block;
+}
+
+.listaPeliculas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.editar h2 {
+    margin-top: 20px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.formulario, .eliminarPeli {
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 0;  /* Elimina el espacio extra entre las dos opciones */
+    cursor: pointer;
+}
+
+.editar summary {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.editar .contenido {
+    margin-top: 15px;
+    cursor: default;
+}
+
+/* Inputs encapsulados en ".editar" para no alterar los formularios de otras pantallas */
+.editar input[type="text"], 
+.editar input[type="number"],
+.editar input[type="file"],
+.editar input[type="url"] {
+    background-color: #595959;
+    border: none;
+    border-radius: 20px;
+    color: #ffffff;
+    padding: 4px 12px;
+    font-size: 18px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+
+.editar input[type="file"]::file-selector-button {
+    background-color: #404040;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 4px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* Botones agregar/eliminar */
+.confirmar {
+    display: block;
+    background-color: #dfba6b;
+    color: #2b2313;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 35px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 25px auto 20px auto;
+}
+
+/* Los botones cambian de color al pasar el mouse */
+.confirmar:hover {
+    background-color: #cda85a;
+}
+
+/* --- RESPONSIVE - CELULARES --- */
+@media (max-width: 600px) {
+    .pagina-editar nav {
+        font-size: 16px;
+        padding: 5px 10px;
+    }
+
+    .editar {
+        width: 95%;
+        padding: 15px 10px;
+        margin-top: 25px;
+    }
+
+    .editar h2 {
+        font-size: 18px;
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    .formulario, .eliminarPeli {
+        padding: 10px 5px;
+        margin-bottom: 10px;
+    }
+
+    .editar input[type="text"], 
+    .editar input[type="number"],
+    .editar input[type="file"],
+    .editar input[type="url"] {
+        font-size: 15px;
+    }
+
+    .confirmar {
+        width: 100%; /* En celular ocupa el ancho completo para que sea cómodo tocarlo */
+    }
+}
