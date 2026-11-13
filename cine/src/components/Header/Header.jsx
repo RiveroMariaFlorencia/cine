@@ -17,7 +17,7 @@ function Header() {
 
             <div className="comprar">
                 <Link
-                    to="/comprar-ticket"
+                    to="/crear-cuenta"
                     className="comprarRef"
                 >
                     COMPRA TUS ENTRADAS ONLINE
